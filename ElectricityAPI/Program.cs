@@ -1,7 +1,10 @@
 using ElectricityAPI.Data;
 using ElectricityAPI.Repositories;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
 
 // Add services to the container.
 
@@ -13,7 +16,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<Connections>();
 builder.Services.AddScoped<IElectricityRepository, ElectricityRepository>();
 
+
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -21,6 +26,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseSerilogRequestLogging();
 
 app.UseHttpsRedirection();
 
