@@ -12,6 +12,8 @@ namespace ElectricityAPI.Repositories
             _conn = connections;
         }
 
+       
+
         public async Task<IEnumerable<ElectricityModel>> GetElectricityData()
         {
             string sql = "Get_ElectricityData";
